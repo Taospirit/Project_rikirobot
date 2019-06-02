@@ -1,0 +1,33 @@
+[submodule "rikirobot"]
+	path = rikirobot
+	url = https://github.com/ykevin/rikirobot.git
+[submodule "riki_msgs"]
+	path = riki_msgs
+	url = https://github.com/ykevin/riki_msgs.git
+[submodule "riki_pid"]
+	path = riki_pid
+	url = https://github.com/ykevin/riki_pid.git
+[submodule "rikirobot_apps"]
+	path = rikirobot_apps
+	url = https://github.com/ykevin/rikirobot_apps.git
+[submodule "rikirobot_nav"]
+	path = rikirobot_nav
+	url = https://github.com/ykevin/rikirobot_nav.git
+[submodule "rikirobot_vision"]
+	path = rikirobot_vision
+	url = https://github.com/ykevin/rikirobot_vision.git
+[submodule "frontier_exploration"]
+	path = frontier_exploration
+	url = https://github.com/ykevin/frontier_exploration.git
+[submodule "imu_calib"]
+	path = imu_calib
+	url = https://github.com/ykevin/imu_calib.git
+[submodule "riki_follower"]
+	path = riki_follower
+	url = https://github.com/ykevin/riki_follower.git
+[submodule "riki_lidar_follower"]
+	path = riki_lidar_follower
+	url = https://github.com/ykevin/riki_lidar_follower.git
+[submodule "riki_line_follower"]
+	path = riki_line_follower
+	url = https://github.com/ykevin/riki_line_follower.git

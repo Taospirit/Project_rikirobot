@@ -1,0 +1,22 @@
+<launch>
+
+  <include file="$(find freenect_launch)/launch/freenect.launch"/>
+  <node pkg="nodelet" type="nodelet" name="riki_follower"
+        args="load riki_follower/RikiFollower camera/camera_nodelet_manager">
+ 	
+	<remap from="riki_follower/cmd_vel" to="/cmd_vel"/>
+    <param name="enabled" value="true" />  <!-- enable/disable following -->
+    <param name="x_scale" value="2.5" />   <!-- turn amplitude facor -->
+    <param name="z_scale" value="2.0" />   <!-- ignored -->
+    <param name="min_x" value="-0.35" />  <!-- scan box size in meters, horiz from ctr -->
+    <param name="max_x" value="0.35" />   <!-- scan box size in meters, horiz from ctr -->
+    <param name="min_y" value="0.1" /> <!-- scan box size in meters, distance up from floor -->
+    <param name="max_y" value="0.5" /> <!-- scan box size in meters, distance up from floor -->
+    <param name="max_z" value="1.3" /> <!-- scan box size in meters, horiz depth from camera -->
+    <param name="goal_z" value="0.7" /> <!-- distance to hold target centroid, distance from camera -->
+    <param name="z_tol" value="0.1" />  <!-- +/- tolerance distance to hold target centroid, distance from camera -->
+    <param name="x_tol" value="0.15" /> <!-- +/- tolerance distance to hold target centroid, lateral -->
+  </node>
+	
+</launch>
+

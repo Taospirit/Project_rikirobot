@@ -1,0 +1,7 @@
+<library path="lib/libriki_follower">
+  <class name="riki_follower/RikiFollower" type="riki_follower::RikiFollower" base_class_type="nodelet::Nodelet">
+    <description>
+      The rikirobot people follower node.
+    </description>
+  </class>
+</library> 
