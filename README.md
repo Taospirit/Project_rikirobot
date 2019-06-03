@@ -1,2 +1,2 @@
 # Project_UAV
-This is for course design.
+This is a project for course design.
