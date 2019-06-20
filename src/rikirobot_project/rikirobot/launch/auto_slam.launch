@@ -1,9 +1,10 @@
 <launch>
- <include file="$(find rikirobot)/launch/lidar/$(env RIKILIDAR).launch" />
+  <arg name="rviz_name" value="auto_slam">
+  <include file="$(find rikirobot)/launch/lidar/$(env RIKILIDAR).launch" />
   <include file="$(find rikirobot)/param/navigation/slam_gmapping.xml" />
   <include file="$(find rikirobot)/param/navigation/move_base.xml" />
   <include file="$(find frontier_exploration)/launch/global_map.launch" />
 
-  <node pkg="rviz" name="rviz" type="rviz" args="-d $(find rikirobot)/rviz/auto_slam.rviz" />
+  <node pkg="rviz" name="rviz" type="rviz" args="-d $(find rikirobot)/rviz/$(arg rviz_name).rviz" />
 
 </launch>
