@@ -195,12 +195,12 @@ class visualTracker:
 		
 
 if __name__ == '__main__':
-        print('starting')
-        rospy.init_node('visual_tracker')
-	tracker=visualTracker()
-        print('seems to do something')
-        try:
-                rospy.spin()
-        except rospy.ROSInterruptException:
-                print('exception')
+	print('starting')
+	rospy.init_node('visual_tracker')
+	tracker = visualTracker()
+	print('seems to do something')
+	try:
+		rospy.spin()
+	except rospy.ROSInterruptException:
+		print('exception')
 

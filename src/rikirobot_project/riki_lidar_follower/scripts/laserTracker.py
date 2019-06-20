@@ -12,7 +12,7 @@ from riki_lidar_follower.msg import position as PositionMsg
 		
 class laserTracker:
 	def __init__(self):
-		self.lastScan=None
+		self.lastScan = None
 		self.winSize = rospy.get_param('~winSize')
 		self.deltaDist = rospy.get_param('~deltaDist')
 		self.scanSubscriber = rospy.Subscriber('/scan', LaserScan, self.registerScan)
@@ -26,9 +26,9 @@ class laserTracker:
 		sortedIndices = np.argsort(ranges)
 		
 		minDistanceID = None
-		minDistance   = float('inf')		
+		minDistance = float('inf')		
 
-		if(not(self.lastScan is None)):
+		if not self.lastScan is None:
 			# if we already have a last scan to compare to:
 			for i in sortedIndices:
 				# check all distance measurements starting from the closest one
@@ -39,12 +39,12 @@ class laserTracker:
 				# in the last scan within that window
 				
 				# we kneed to clip the window so we don't have an index out of bounds
-				windowIndex = np.clip([i-self.winSize, i+self.winSize+1],0,len(self.lastScan))
+				windowIndex = np.clip([i-self.winSize, i+self.winSize+1], 0, len(self.lastScan))
 				window = self.lastScan[windowIndex[0]:windowIndex[1]]
 
 				with np.errstate(invalid='ignore'):
 					# check if any of the scans in the window (in the last scan) has a distance close enough to the current one
-					if(np.any(abs(window-tempMinDistance)<=self.deltaDist)):
+					if(np.any(abs(window-tempMinDistance) <= self.deltaDist)):
 					# this will also be false for all tempMinDistance = NaN or inf
 
 						# we found a plausible distance
@@ -56,7 +56,7 @@ class laserTracker:
 		self.lastScan=ranges	
 		
 		#catches no scan, no minimum found, minimum is actually inf
-		if(minDistance > scan_data.range_max):
+		if minDistance > scan_data.range_max:
 			#means we did not really find a plausible object
 			
 			# publish warning that we did not find anything
@@ -70,8 +70,6 @@ class laserTracker:
 			self.positionPublisher.publish(PositionMsg(minDistanceAngle, 42, minDistance))
 			
 
-
-
 if __name__ == '__main__':
 	print('starting')
 	rospy.init_node('laser_tracker')
@@ -81,5 +79,38 @@ if __name__ == '__main__':
 		rospy.spin()
 	except rospy.ROSInterruptException:
 		print('exception')
+
+# sensor_msgs/LaserScan Message
+# File: sensor_msgs/LaserScan.msg
+# Raw Message Definition
+# # Single scan from a planar laser range-finder
+# #
+# # If you have another ranging device with different behavior (e.g. a sonar
+# # array), please find or create a different message, since applications
+# # will make fairly laser-specific assumptions about this data
+
+# Header header            # timestamp in the header is the acquisition time of 
+#                          # the first ray in the scan.
+#                          #
+#                          # in frame frame_id, angles are measured around 
+#                          # the positive Z axis (counterclockwise, if Z is up)
+#                          # with zero angle being forward along the x axis
+                         
+# float32 angle_min        # start angle of the scan [rad]
+# float32 angle_max        # end angle of the scan [rad]
+# float32 angle_increment  # angular distance between measurements [rad]
+
+# float32 time_increment   # time between measurements [seconds] - if your scanner
+#                          # is moving, this will be used in interpolating position
+#                          # of 3d points
+# float32 scan_time        # time between scans [seconds]
+
+# float32 range_min        # minimum range value [m]
+# float32 range_max        # maximum range value [m]
+
+# float32[] ranges         # range data [m] (Note: values < range_min or > range_max should be discarded)
+# float32[] intensities    # intensity data [device-specific units].  If your
+#                          # device does not provide intensities, please leave
+#                          # the array empty.
 
 

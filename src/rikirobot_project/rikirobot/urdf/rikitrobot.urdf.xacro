@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot name="pibot_description" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- <xacro:include filename="$(find realsense2_camera)/urdf/_d435.urdf.xacro"/> -->
+  <xacro:property name="realsense_offset_x" value="0.3">
+  <xacro:property name="realsense_offset_y" value="0.0">
+  <xacro:property name="realsense_offset_z" value="0.0">
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0040943 9.2182E-07 -0.001396" rpy="0 0 0" />
+      <mass value="2.9392" />
+      <inertia ixx="0.021823" ixy="-1.8374E-07" ixz="0.00017413" iyy="0.031589" iyz="3.2827E-09" izz="0.043906" />
+    </inertial>
+  
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://rikirobot/urdf/base_link.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://rikirobot/urdf/base_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <link name="laser_link">
+    <inertial>
+      <origin xyz="-0.0017532 9.7056E-08 0.018369" rpy="0 0 0" />
+      <mass value="0.17932" />
+      <inertia ixx="8.4489E-05" ixy="7.2842E-12" ixz="3.6373E-06" iyy="7.9944E-05" iyz="-3.7959E-10" izz="0.00011884" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://rikirobot/urdf/laser_link.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.25 0.25 0.25 1.2" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://rikirobot/urdf/laser_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="laser_link_joint" type="fixed">
+    <origin xyz="0 0 0.086" rpy="1.2246E-16 -6.123E-17 0" />
+    <parent link="base_link" />
+    <child link="laser_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  
+  <!-- <link name="realsense_link" />
+  <sensor_d435 parent="realsense_link">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </sensor_d435>
+
+  <joint name="realsense_joint" type="fixed">
+    <origin xyz="$(realsense_offset_x) $(realsense_offset_y) $(realsense_offset_z)" rpy="0 0 0">
+    <parent link="base_link">
+    <child link="realsense_link"> -->
+</robot>

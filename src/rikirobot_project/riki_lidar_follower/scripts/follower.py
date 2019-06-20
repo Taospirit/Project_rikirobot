@@ -56,6 +56,7 @@ class Follower:
 		rospy.loginfo('Angle: {}, Distance: {}, '.format(angleX, distance))
 		
 		# call the PID controller to update it and get new speeds
+		# update-输入position的角度和距离, 得到twist的线速度和角速度
 		[uncliped_ang_speed, uncliped_lin_speed] = self.PID_controller.update([angleX, distance])
 			
 		# clip these speeds to be less then the maximal speed specified above
@@ -140,6 +141,12 @@ class simplePID:
 		'''
 
 		# check if parameter shapes are compatabile. 
+		case_1 = np.size(P) == np.size(I) == np.size(D) # PID三个参数大小相同
+		case_2 = (np.size(target) == 1) and np.size(P) != 1 # target大小是1且p大小不是1
+		case_3 = np.size(target)!=1 and np.size(P) != np.size(target) and (np.size(P) != 1) #target大小不是1, P大小和target不等, P大小不是1
+		if (not case_1 or case_2 or case_3):
+			print ('input parameters shape is not compatable')
+
 		if(not(np.size(P)==np.size(I)==np.size(D)) or ((np.size(target)==1) and np.size(P)!=1) or (np.size(target )!=1 and (np.size(P) != np.size(target) and (np.size(P) != 1)))):
 			raise TypeError('input parameters shape is not compatable')
 		rospy.loginfo('PID initialised with P:{}, I:{}, D:{}'.format(P,I,D))
@@ -154,7 +161,7 @@ class simplePID:
 		self.timeOfLastCall = None 
 		
 		
-	def update(self, current_value):
+	def update(self, current_value): # [angleX, distance] 传入参数, [ang_speed, linear_speed] 输出参数
 		'''Updates the PID controller. 
 
 		Args:
@@ -171,10 +178,10 @@ class simplePID:
 			# the PID was called for the first time. we don't know the deltaT yet
 			# no controll signal is applied
 			self.timeOfLastCall = time.clock()
-			return np.zeros(np.size(current_value))
+			return np.zeros(np.size(current_value)) # return [0. 0.]
 
 		
-		error = self.setPoint - current_value
+		error = self.setPoint - current_value # [0, targetDist] - [angleX, distance], 目标是ang为0, 距离为targetDist
 		P =  error
 		
 		currentTime = time.clock()
@@ -191,7 +198,7 @@ class simplePID:
 		self.timeOfLastCall = currentTime
 		
 		# return controll signal
-		return self.Kp*P + self.Ki*I + self.Kd*D
+		return self.Kp*P + self.Ki*I + self.Kd*D # 差分PID
 		
 		
 	
